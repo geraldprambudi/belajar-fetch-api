@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>fetch data format txt</title>
+</head>
+<body>
+	<!-- buat button dengan id getPosts -->
+	<button id="getPosts">Ambil data json real</button>
+
+	<!-- buat p dengan id output -->
+	<p id="output"></p>
+
+	<script>
+		// ambil id getPosts dan tambahkan addEventClickListener yang artinya jika button tersebut di klik maka akan melakukan sesuatu atau event
+		document.getElementById('getPosts').addEventListener('click', getPosts);
+
+		// kita buat function getPosts, jadi ketika diklik dia akan melakukan apa ? nah kita buat fungsi-nya (function)
+		function getPosts() {
+			// kita gunakan fetch dalam kita ambil data sample.txt yang sudah kita buat
+			fetch('https://jsonplaceholder.typicode.com/posts')
+			// kita buat response menjadi json
+			.then((response) => response.json())
+			// lalu data nya kita ambil dan kita masuken ke p id output
+			.then((data) => {
+				// kita buat variabel output 
+				let output = '<h2>posts</h2>';
+				// kita console.log agar mengetahui apakah data nya sudah masuk atau belum
+				console.log(data);
+				// forEach ini adalah looping dan dinamakan post
+				data.forEach((post) => {
+					// kita tambahkan output-nya jangan lupa gunakan backslash `` yang di sebelah angka nomer 1
+					// kita panggil id name email didapat dari post.json
+					output += `
+						<div>
+							<h3>${post.title}</h3>
+							<p>${post.body}</p>
+						</div>
+					`;
+				})
+				// kita panggil id output agar bisa di tampilkan ke browser saat di klik
+				document.getElementById('output').innerHTML = output;
+			})
+			// membuat catch jadi kalau ada yang error langsung ketawan
+			.catch((err) => console.log(err));
+		}
+	</script>
+</body>
+</html>
